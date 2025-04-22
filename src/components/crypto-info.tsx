@@ -39,9 +39,23 @@ interface CryptoDetailData {
     max_supply: number;
   };
   description: {
-    es: string;
+    en: string;
   };
   last_updated: string;
+}
+
+interface NewsArticle {
+  source: {
+    id: string | null;
+    name: string;
+  };
+  author: string | null;
+  title: string;
+  description: string;
+  url: string;
+  urlToImage: string;
+  publishedAt: string;
+  content: string;
 }
 
 export function CryptoInfo() {
@@ -50,37 +64,58 @@ export function CryptoInfo() {
   const [cryptoData, setCryptoData] = useState<CryptoDetailData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
+  const [newsLoading, setNewsLoading] = useState(false);
+
+  const fetchCryptoData = async () => {
+    if (!cryptoId) return;
+
+    setLoading(true);
+    setNewsLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch(
+        `https://api.coingecko.com/api/v3/coins/${cryptoId}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false`
+      );
+
+      if (!res.ok) {
+        throw new Error("No se pudo obtener la información de la criptomoneda");
+      }
+
+      const data = await res.json();
+      setCryptoData(data);
+
+      // Fetch news related to the cryptocurrency
+      try {
+        const domain =
+          "coindesk.com,cointelegraph.com,decrypt.co,u.today,cryptotimes.io,beincrypto.com,news.bitcoin.com,crypto.news,cryptopotato.com,coincodex.com,cryptoslate.com,thedefiant.io,blockworks.co,cryptobriefing.com,cryptonews.com";
+        const newsRes = await fetch(
+          `https://newsapi.org/v2/everything?q=${data.name}&domains=${domain}&searchIn=title,description&sortBy=relevancy&language=en&apiKey=${process.env.NEXT_PUBLIC_NEWS_API_KEY}&pageSize=5`
+        );
+
+        if (newsRes.ok) {
+          const newsData = await newsRes.json();
+          console.group("News Data", newsData);
+          setNewsArticles(newsData.articles?.slice(0, 5) || []);
+        }
+      } catch (newsErr) {
+        console.error("Error fetching news:", newsErr);
+        // We don't set the main error state here to not block the crypto data display
+      } finally {
+        setNewsLoading(false);
+      }
+    } catch (err) {
+      setError(
+        "Ocurrió un error al obtener los datos. Intenta nuevamente más tarde."
+      );
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    async function fetchCryptoData() {
-      if (!cryptoId) return;
-
-      setLoading(true);
-      setError(null);
-
-      try {
-        const res = await fetch(
-          `https://api.coingecko.com/api/v3/coins/${cryptoId}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false`
-        );
-
-        if (!res.ok) {
-          throw new Error(
-            "No se pudo obtener la información de la criptomoneda"
-          );
-        }
-
-        const data = await res.json();
-        setCryptoData(data);
-      } catch (err) {
-        setError(
-          "Ocurrió un error al obtener los datos. Intenta nuevamente más tarde."
-        );
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
     fetchCryptoData();
   }, [cryptoId]);
 
@@ -293,15 +328,91 @@ export function CryptoInfo() {
           </div>
         </div>
 
-        {cryptoData.description?.es && (
+        {cryptoData.description?.en && (
           <div className="pt-4 border-t">
             <h3 className="text-lg font-medium mb-2">
               Acerca de {cryptoData.name}
             </h3>
             <div
               className="text-sm text-muted-foreground prose max-w-none"
-              dangerouslySetInnerHTML={{ __html: cryptoData.description.es }}
+              dangerouslySetInnerHTML={{ __html: cryptoData.description.en }}
             />
+          </div>
+        )}
+        {newsArticles.length > 0 && (
+          <div className="pt-4 border-t">
+            <h3 className="text-lg font-medium mb-4">Noticias relacionadas</h3>
+            <div className="space-y-4">
+              {newsArticles.map((article, index) => (
+                <a
+                  key={index}
+                  href={article.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                >
+                  <Card className="overflow-hidden hover:bg-muted/50 transition-colors">
+                    <CardContent className="p-4 grid md:grid-cols-[1fr_3fr] gap-4">
+                      {article.urlToImage ? (
+                        <div className="aspect-video md:aspect-square overflow-hidden rounded-md">
+                          <img
+                            src={article.urlToImage || "/placeholder.svg"}
+                            alt={article.title}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <div className="aspect-video md:aspect-square bg-muted rounded-md flex items-center justify-center">
+                          <span className="text-muted-foreground">
+                            Sin imagen
+                          </span>
+                        </div>
+                      )}
+                      <div className="space-y-2">
+                        <h4 className="font-medium line-clamp-2">
+                          {article.title}
+                        </h4>
+                        <p className="text-sm text-muted-foreground line-clamp-2">
+                          {article.description}
+                        </p>
+                        <div className="flex items-center justify-between text-xs">
+                          <span>{article.source.name}</span>
+                          <span>
+                            {new Date(article.publishedAt).toLocaleDateString(
+                              "es-AR"
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {newsLoading && (
+          <div className="pt-4 border-t">
+            <h3 className="text-lg font-medium mb-4">Noticias relacionadas</h3>
+            <div className="space-y-4">
+              {[...Array(3)].map((_, index) => (
+                <Card key={index}>
+                  <CardContent className="p-4 grid md:grid-cols-[1fr_3fr] gap-4">
+                    <Skeleton className="aspect-video md:aspect-square rounded-md" />
+                    <div className="space-y-2">
+                      <Skeleton className="h-6 w-full" />
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-3/4" />
+                      <div className="flex justify-between">
+                        <Skeleton className="h-3 w-20" />
+                        <Skeleton className="h-3 w-20" />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         )}
       </CardContent>

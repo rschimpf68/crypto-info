@@ -50,8 +50,6 @@ export default async function Home() {
   );
   // Parse the response as JSON
   const cryptoList: CoinMarketData[] = await res.json();
-  console.log(cryptoList);
-
   return (
     <div className="flex flex-col items-center min-h-screen p-8 pb-20 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <div className="text-center max-w-2xl">
