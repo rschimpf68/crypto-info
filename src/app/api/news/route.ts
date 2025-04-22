@@ -24,10 +24,12 @@ export async function GET(req: NextRequest) {
    }
 
    const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&domains=coindesk.com,cointelegraph.com,decrypt.co,u.today,cryptotimes.io,beincrypto.com,news.bitcoin.com,crypto.news,cryptopotato.com,coincodex.com,cryptoslate.com,thedefiant.io,blockworks.co,cryptobriefing.com,cryptonews.com&searchIn=title,description&sortBy=relevancy&language=en&pageSize=5&apiKey=${apiKey}`;
+   console.log('Fetching URL:', url);
 
    try {
       const response = await fetch(url);
       const data = await response.json();
+      console.log('Response Data:', data);
       return NextResponse.json(data);
    } catch (error) {
       return NextResponse.json({ error: 'Error fetching news' }, { status: 500 });

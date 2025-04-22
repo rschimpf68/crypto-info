@@ -32,8 +32,7 @@ export function CryptoInfo() {
     setError(null);
 
     try {
-      const res = await fetch(`/api/cryptoInfo?q=${cryptoId}`);
-      console.log(res);
+      const res = await fetch(`/api/cryptoInfo?crypto=${cryptoId}`);
       if (!res.ok) {
         throw new Error("No se pudo obtener la información de la criptomoneda");
       }
@@ -115,8 +114,8 @@ export function CryptoInfo() {
   };
 
   return (
-    <Card className="w-full">
-      <CardHeader className="flex flex-row items-center gap-4">
+    <Card className="w-full bg-[#1E1E1E] text-white ">
+      <CardHeader className="flex  flex-row items-center gap-4">
         <img
           src={cryptoData.image.large || "/placeholder.svg"}
           alt={cryptoData.name}
@@ -291,7 +290,7 @@ export function CryptoInfo() {
           </div>
         )}
         {newsArticles.length > 0 && (
-          <div className="pt-4 border-t">
+          <div className="pt-4 border-t   ">
             <h3 className="text-lg font-medium mb-4">Noticias relacionadas</h3>
             <div className="space-y-4">
               {newsArticles.map((article, index) => (
@@ -302,7 +301,7 @@ export function CryptoInfo() {
                   rel="noopener noreferrer"
                   className="block"
                 >
-                  <Card className="overflow-hidden hover:bg-muted/50 transition-colors">
+                  <Card className="overflow-hidden hover:bg-[#2E2E2E] text-white bg-[#1E1E1E]  transition-colors">
                     <CardContent className="p-4 grid md:grid-cols-[1fr_3fr] gap-4">
                       {article.urlToImage ? (
                         <div className="aspect-video md:aspect-square overflow-hidden rounded-md">
@@ -373,7 +372,7 @@ export function CryptoInfo() {
 
 function CryptoInfoSkeleton() {
   return (
-    <Card className="w-full">
+    <Card className="w-full bg-[#1E1E1E] text-white ">
       <CardHeader className="flex flex-row items-center gap-4">
         <Skeleton className="w-12 h-12 rounded-full" />
         <div>

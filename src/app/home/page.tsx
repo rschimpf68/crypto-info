@@ -51,10 +51,11 @@ export default async function Home() {
   // Parse the response as JSON
   const cryptoList: CoinMarketData[] = await res.json();
   return (
-    <div className="flex flex-col items-center min-h-screen p-8 pb-20 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    //make it dark mode
+    <div className="flex bg-[#121212] text-white flex-col  items-center min-h-screen p-8 pb-20 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <div className="text-center max-w-2xl">
         <h1 className="text-3xl font-bold mb-4">Info sobre Crypto</h1>
-        <p className="text-lg text-muted-foreground mb-8">
+        <p className="text-lg  mb-8 text-gray-400">
           Obtené información útil al instante sobre la crypto que querés
           investigar
         </p>
