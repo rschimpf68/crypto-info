@@ -7,6 +7,7 @@ import {
 } from "@headlessui/react";
 import { CryptoSearch } from "@/components/crypto-search";
 import { CryptoInfo } from "@/components/crypto-info";
+import { Suspense } from "react";
 
 interface CoinMarketData {
   id: string;
@@ -64,7 +65,9 @@ export default async function Home() {
       <CryptoSearch cryptoList={cryptoList} />
 
       <div className="w-full max-w-4xl mt-8">
-        <CryptoInfo />
+        <Suspense fallback={<div>Loading...</div>}>
+          <CryptoInfo />
+        </Suspense>
       </div>
     </div>
   );
