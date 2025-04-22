@@ -12,51 +12,8 @@ import {
   BarChart3,
   Clock,
 } from "lucide-react";
-
-interface CryptoDetailData {
-  id: string;
-  symbol: string;
-  name: string;
-  image: {
-    large: string;
-  };
-  market_data: {
-    current_price: {
-      usd: number;
-      ars: number;
-    };
-    price_change_percentage_24h: number;
-    price_change_percentage_7d: number;
-    price_change_percentage_30d: number;
-    market_cap: {
-      usd: number;
-    };
-    total_volume: {
-      usd: number;
-    };
-    circulating_supply: number;
-    total_supply: number;
-    max_supply: number;
-  };
-  description: {
-    en: string;
-  };
-  last_updated: string;
-}
-
-interface NewsArticle {
-  source: {
-    id: string | null;
-    name: string;
-  };
-  author: string | null;
-  title: string;
-  description: string;
-  url: string;
-  urlToImage: string;
-  publishedAt: string;
-  content: string;
-}
+import { CryptoDetailData } from "@/app/api/cryptoInfo/route";
+import { NewsArticle } from "@/app/api/news/route";
 
 export function CryptoInfo() {
   const searchParams = useSearchParams();
@@ -75,10 +32,8 @@ export function CryptoInfo() {
     setError(null);
 
     try {
-      const res = await fetch(
-        `https://api.coingecko.com/api/v3/coins/${cryptoId}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false`
-      );
-
+      const res = await fetch(`/api/cryptoInfo?q=${cryptoId}`);
+      console.log(res);
       if (!res.ok) {
         throw new Error("No se pudo obtener la información de la criptomoneda");
       }
@@ -88,11 +43,7 @@ export function CryptoInfo() {
 
       // Fetch news related to the cryptocurrency
       try {
-        const domain =
-          "coindesk.com,cointelegraph.com,decrypt.co,u.today,cryptotimes.io,beincrypto.com,news.bitcoin.com,crypto.news,cryptopotato.com,coincodex.com,cryptoslate.com,thedefiant.io,blockworks.co,cryptobriefing.com,cryptonews.com";
-        const newsRes = await fetch(
-          `https://newsapi.org/v2/everything?q=${data.name}&domains=${domain}&searchIn=title,description&sortBy=relevancy&language=en&apiKey=${process.env.NEXT_PUBLIC_NEWS_API_KEY}&pageSize=5`
-        );
+        const newsRes = await fetch(`/api/news?q=${data.name}`);
 
         if (newsRes.ok) {
           const newsData = await newsRes.json();
