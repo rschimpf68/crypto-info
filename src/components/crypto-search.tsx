@@ -84,14 +84,14 @@ export function CryptoSearch({ cryptoList }: CryptoSearchProps) {
       </div>
 
       {showResults && filteredCryptos.length > 0 && (
-        <Card className="absolute w-full mt-1 z-10  bg-[#1E1E1E] text-white">
-          <CardContent className="p-2">
+        <Card className="absolute w-full  z-10  bg-[#1E1E1E] text-white">
+          <CardContent className="p-2 ">
             <ul className="divide-y">
               {filteredCryptos.map((crypto) => (
                 <li key={crypto.id}>
                   <Button
                     variant="ghost"
-                    className="w-full justify-start py-2 px-3 h-auto hover:bg-gray-800"
+                    className="w-full justify-start py-2 px-3 h-auto hover:bg-[#2A2A2A]"
                     onClick={() => handleSelectCrypto(crypto.id)}
                   >
                     <div className="flex items-center gap-3">
@@ -101,9 +101,11 @@ export function CryptoSearch({ cryptoList }: CryptoSearchProps) {
                         className="w-6 h-6"
                       />
                       <div>
-                        <p className="font-medium text-white">{crypto.name}</p>
-                        <p className="text-xs text-white uppercase">
-                          {crypto.symbol}
+                        <p className="font-medium text-lg text-white">
+                          {crypto.name}
+                        </p>
+                        <p className="text-base text-start text-white uppercase ">
+                          {crypto.symbol.trim()}
                         </p>
                       </div>
                     </div>
@@ -116,7 +118,7 @@ export function CryptoSearch({ cryptoList }: CryptoSearchProps) {
       )}
 
       {showResults && filteredCryptos.length === 0 && searchTerm && (
-        <Card className="absolute w-full mt-1 z-10">
+        <Card className="absolute w-full mt-1 z-10 bg-[#1E1E1E]">
           <CardContent className="p-4 text-center">
             <p className="text-muted-foreground">
               No se encontraron resultados para "{searchTerm}"
