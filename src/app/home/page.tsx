@@ -1,12 +1,5 @@
-import Image from "next/image";
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxOption,
-  ComboboxOptions,
-} from "@headlessui/react";
-import { CryptoSearch } from "@/components/crypto-search";
 import { CryptoInfo } from "@/components/crypto-info";
+import { CryptoSearch } from "@/components/crypto-search";
 import { Suspense } from "react";
 
 interface CoinMarketData {

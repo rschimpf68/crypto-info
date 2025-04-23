@@ -71,9 +71,9 @@ export function CryptoInfo() {
 
   if (!cryptoId) {
     return (
-      <Card className="w-full">
-        <CardContent className="p-8 text-center">
-          <p className="text-muted-foreground">
+      <Card className="w-full bg bg-[#1E1E1E] ">
+        <CardContent className="p-8 text-center ">
+          <p className="text-white">
             Busca una criptomoneda para ver información detallada
           </p>
         </CardContent>
@@ -279,12 +279,12 @@ export function CryptoInfo() {
         </div>
 
         {cryptoData.description?.en && (
-          <div className="pt-4 border-t">
-            <h3 className="text-lg font-medium mb-2">
+          <div className="pt-4 border-t ">
+            <h3 className="text-xl font-medium mb-2">
               Acerca de {cryptoData.name}
             </h3>
             <div
-              className="text-sm text-muted-foreground prose max-w-none"
+              className="text-base text-gray-400 prose max-w-none"
               dangerouslySetInnerHTML={{ __html: cryptoData.description.en }}
             />
           </div>
@@ -319,13 +319,13 @@ export function CryptoInfo() {
                         </div>
                       )}
                       <div className="space-y-2">
-                        <h4 className="font-medium line-clamp-2">
+                        <h4 className="font-medium line-clamp-2 text-xl">
                           {article.title}
                         </h4>
-                        <p className="text-sm text-muted-foreground line-clamp-2">
+                        <p className="text-sm text-gray-400 line-clamp-2">
                           {article.description}
                         </p>
-                        <div className="flex items-center justify-between text-xs">
+                        <div className="flex items-center text-gray-400 text-base justify-between">
                           <span>{article.source.name}</span>
                           <span>
                             {new Date(article.publishedAt).toLocaleDateString(

@@ -23,7 +23,9 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'API key not configured' }, { status: 500 });
    }
 
-   const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&domains=coindesk.com,cointelegraph.com,decrypt.co,u.today,cryptotimes.io,beincrypto.com,news.bitcoin.com,crypto.news,cryptopotato.com,coincodex.com,cryptoslate.com,thedefiant.io,blockworks.co,cryptobriefing.com,cryptonews.com&searchIn=title,description&sortBy=relevancy&language=en&pageSize=5&apiKey=${apiKey}`;
+   const domains = "coindesk.com,cointelegraph.com,decrypt.co,u.today,cryptotimes.io,beincrypto.com,news.bitcoin.com,crypto.news,cryptopotato.com,coincodex.com,cryptoslate.com,thedefiant.io,blockworks.co,cryptobriefing.com,cryptonews.com"
+
+   const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&domains=${domains}&searchIn=title,description&sortBy=relevancy&language=en&pageSize=5&apiKey=${apiKey}`;
    console.log('Fetching URL:', url);
 
    try {

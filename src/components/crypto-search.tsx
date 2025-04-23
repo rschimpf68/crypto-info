@@ -72,7 +72,7 @@ export function CryptoSearch({ cryptoList }: CryptoSearchProps) {
 
   return (
     <div className="w-full max-w-md relative">
-      <div className="relative">
+      <div className="relative ">
         <Input
           type="text"
           placeholder="Buscar por símbolo (BTC, ETH) o nombre"
@@ -84,7 +84,7 @@ export function CryptoSearch({ cryptoList }: CryptoSearchProps) {
       </div>
 
       {showResults && filteredCryptos.length > 0 && (
-        <Card className="absolute w-full mt-1 z-10">
+        <Card className="absolute w-full mt-1 z-10  bg-[#1E1E1E] text-white">
           <CardContent className="p-2">
             <ul className="divide-y">
               {filteredCryptos.map((crypto) => (
