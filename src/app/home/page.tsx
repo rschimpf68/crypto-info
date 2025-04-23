@@ -44,18 +44,17 @@ export default async function Home() {
   // Parse the response as JSON
   const cryptoList: CoinMarketData[] = await res.json();
   return (
-    //make it dark mode
     <div className="flex bg-[#121212] text-white flex-col  items-center min-h-screen p-8 pb-20 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <div className="text-center max-w-2xl">
-        <h1 className="text-3xl font-bold mb-4">Info sobre Crypto</h1>
+        <h1 className="text-3xl font-bold mb-4">Información sobre Crypto</h1>
         <p className="text-lg  mb-8 text-gray-400">
           Obtené información útil al instante sobre la crypto que querés
           investigar
         </p>
       </div>
-
-      <CryptoSearch cryptoList={cryptoList} />
-
+      <Suspense fallback={<div>Loading...</div>}>
+        <CryptoSearch cryptoList={cryptoList} />
+      </Suspense>
       <div className="w-full max-w-4xl mt-8">
         <Suspense fallback={<div>Loading...</div>}>
           <CryptoInfo />

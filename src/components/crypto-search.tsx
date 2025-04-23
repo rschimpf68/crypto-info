@@ -91,7 +91,7 @@ export function CryptoSearch({ cryptoList }: CryptoSearchProps) {
                 <li key={crypto.id}>
                   <Button
                     variant="ghost"
-                    className="w-full justify-start py-2 px-3 h-auto"
+                    className="w-full justify-start py-2 px-3 h-auto hover:bg-gray-800"
                     onClick={() => handleSelectCrypto(crypto.id)}
                   >
                     <div className="flex items-center gap-3">
@@ -101,8 +101,8 @@ export function CryptoSearch({ cryptoList }: CryptoSearchProps) {
                         className="w-6 h-6"
                       />
                       <div>
-                        <p className="font-medium">{crypto.name}</p>
-                        <p className="text-xs text-muted-foreground uppercase">
+                        <p className="font-medium text-white">{crypto.name}</p>
+                        <p className="text-xs text-white uppercase">
                           {crypto.symbol}
                         </p>
                       </div>

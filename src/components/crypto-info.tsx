@@ -70,15 +70,7 @@ export function CryptoInfo() {
   }, [cryptoId]);
 
   if (!cryptoId) {
-    return (
-      <Card className="w-full bg bg-[#1E1E1E] ">
-        <CardContent className="p-8 text-center ">
-          <p className="text-white">
-            Busca una criptomoneda para ver información detallada
-          </p>
-        </CardContent>
-      </Card>
-    );
+    return <></>;
   }
 
   if (loading) {
