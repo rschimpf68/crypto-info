@@ -54,7 +54,7 @@ export default async function Home() {
   return (
     <div className="flex bg-[#121212] text-white flex-col  items-center min-h-screen p-8 pb-20 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <div className="text-center max-w-2xl">
-        <h1 className="text-3xl font-bold mb-4">Información sobre Crypto</h1>
+        <h1 className="text-3xl font-bold mb-4">Crypto Cloud</h1>
         <p className="text-lg  mb-8 text-gray-300">
           Obtené información relevante al instante sobre la crypto que querés
           investigar

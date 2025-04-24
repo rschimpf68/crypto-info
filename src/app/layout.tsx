@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Crypto Info",
+  title: "Crypto Cloud",
   description: "Información de tus crpytos favoritas",
 };
 
