@@ -19,14 +19,14 @@ export interface CoinMarketData {
    max_supply: number | null;
    ath: number;
    ath_change_percentage: number;
-   ath_date: string; // ISO 8601 format
+   ath_date: string;
    atl: number;
    atl_change_percentage: number;
-   atl_date: string; // ISO 8601 format
+   atl_date: string;
    roi: {
       times: number;
       currency: string;
       percentage: number;
    } | null;
-   last_updated: string; // ISO 8601 format
+   last_updated: string;
 }

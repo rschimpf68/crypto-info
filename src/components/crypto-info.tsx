@@ -40,10 +40,8 @@ export function CryptoInfo() {
       const data = await res.json();
       setCryptoData(data);
 
-      // Fetch news related to the cryptocurrency
       try {
         const newsRes = await fetch(`/api/news?q=${data.name}`);
-
         if (newsRes.ok) {
           const newsData = await newsRes.json();
           console.group("News Data", newsData);
@@ -51,7 +49,6 @@ export function CryptoInfo() {
         }
       } catch (newsErr) {
         console.error("Error fetching news:", newsErr);
-        // We don't set the main error state here to not block the crypto data display
       } finally {
         setNewsLoading(false);
       }

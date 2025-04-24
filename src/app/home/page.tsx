@@ -23,20 +23,19 @@ interface CoinMarketData {
   max_supply: number | null;
   ath: number;
   ath_change_percentage: number;
-  ath_date: string; // ISO 8601 format
+  ath_date: string;
   atl: number;
   atl_change_percentage: number;
-  atl_date: string; // ISO 8601 format
+  atl_date: string;
   roi: {
     times: number;
     currency: string;
     percentage: number;
   } | null;
-  last_updated: string; // ISO 8601 format
+  last_updated: string;
 }
 
 export default async function Home() {
-  // Use CoinMarket interface to type the response from the API
   const url =
     "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false";
   console.log("Fetching URL", url);
@@ -46,9 +45,8 @@ export default async function Home() {
     { next: { revalidate: 60 } }
   );
 
-  // Parse the response as JSON
   const cryptoList: CoinMarketData[] = await res.json();
-  //First five elements of the array
+
   console.log("Response", cryptoList.slice(0, 5));
 
   return (
